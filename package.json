@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "netlify": "netlify-lambda build express"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -12,8 +11,9 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "netlify-lambda": "^2.0.1",
-    "serverless-http": "^2.6.0"
+    "morgan": "~1.9.1"
+  },
+  "engines": {
+    "node": "12.18.4"
   }
 }
