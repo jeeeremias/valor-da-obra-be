@@ -5,7 +5,7 @@ var totalBudget = require('../services/detailedBudget');
 
 /* GET users listing. */
 router.get('/detalhado', function(req, res, next) {
-  res.json(totalBudget(req.query.areaTotal, req.query.areaUtil, req.query.padrao));
+  res.json(totalBudget(req.query));
 });
 
 module.exports = router;

@@ -3,6 +3,7 @@ module.exports = (valorTotal) => {
   return {
     name: "Acabamento",
     totalBudget: valorTotal * PORCENTAGEM,
-    steps: []
+    steps: [],
+    description: "O acabamento é o principal responsável pela aparência de uma residência."
   }
 }

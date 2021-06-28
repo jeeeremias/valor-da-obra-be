@@ -1,4 +1,3 @@
-var projetosEAprovacoes = require('./etapas/projetosEAprovacoes');
 var servicosPreliminares = require('./etapas/servicosPreliminares');
 var fundacoes = require('./etapas/fundacoes');
 var estrutura = require('./etapas/estrutura');
@@ -14,19 +13,17 @@ var acabamento = require('./etapas/acabamento');
 var vidros = require('./etapas/vidros');
 var pintura = require('./etapas/pintura');
 var servicosComplementares = require('./etapas/servicosComplementares');
+var bdi = require('./etapas/bdi');
+var projetoArquitetonico = require('./etapas/projetoArquitetonico');
+var projetoEletrico = require('./etapas/projetoEletrico');
+var projetoHidraulico = require('./etapas/projetoHidraulico');
+var projetoEstrutural = require('./etapas/projetoEstrutural');
+var precoTotal = require('./etapas/precoTotal');
 
-const precoPorPadrao = {
-  baixo: 1238.15,
-  medio: 1520.78,
-  alto: 1831.59
-}
-
-module.exports = (areaTotal, areaUtil, padrao) => {
-  const valorTotal = precoPorPadrao[padrao] * areaTotal;
-
+module.exports = (estimateObject) => {
+  const valorTotal = precoTotal(estimateObject.standard, estimateObject.type, estimateObject.totalArea);
   const detailedBudget = [];
 
-  detailedBudget.push(projetosEAprovacoes(valorTotal));
   detailedBudget.push(servicosPreliminares(valorTotal));
   detailedBudget.push(fundacoes(valorTotal));
   detailedBudget.push(estrutura(valorTotal));
@@ -37,11 +34,26 @@ module.exports = (areaTotal, areaUtil, padrao) => {
   detailedBudget.push(instalacoesComplementares(valorTotal));
   detailedBudget.push(impermeabilizacao(valorTotal));
   detailedBudget.push(esquadrias(valorTotal));
-  detailedBudget.push(revestimento(valorTotal, areaUtil));
+  detailedBudget.push(revestimento(valorTotal, estimateObject.floorArea));
   detailedBudget.push(acabamento(valorTotal));
   detailedBudget.push(vidros(valorTotal));
   detailedBudget.push(pintura(valorTotal));
   detailedBudget.push(servicosComplementares(valorTotal));
+  if (estimateObject.bdi) {
+    detailedBudget.push(bdi(estimateObject.standard, valorTotal));
+  };
+  if (estimateObject.architecturalProject) {
+    detailedBudget.push(projetoArquitetonico(estimateObject.standard, estimateObject.architecturalProjectValue, estimateObject.totalArea))
+  };
+  if (estimateObject.electricalProject) {
+    detailedBudget.push(projetoEletrico(estimateObject.standard, estimateObject.electricalProjectValue, estimateObject.totalArea))
+  };
+  if (estimateObject.hydraulicProject) {
+    detailedBudget.push(projetoHidraulico(estimateObject.standard, estimateObject.hydraulicProjectValue, estimateObject.totalArea))
+  };
+  if (estimateObject.structuralProject) {
+    detailedBudget.push(projetoEstrutural(estimateObject.standard, estimateObject.structuralProjectValue, estimateObject.totalArea))
+  };
 
   return detailedBudget;
 }

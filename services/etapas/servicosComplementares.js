@@ -1,8 +1,9 @@
-const PORCENTAGEM = 0.01;
+const PORCENTAGEM = 0.0211;
 module.exports = (valorTotal) => {
   return {
     name: "Serviços Complementares",
     totalBudget: valorTotal * PORCENTAGEM,
-    steps: []
+    steps: [],
+    description: "São considerados como serviços complementares, aqueles que por sua vez ocorrem após a finalização da obra."
   }
 }
