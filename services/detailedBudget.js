@@ -13,6 +13,7 @@ var acabamento = require('./etapas/acabamento');
 var vidros = require('./etapas/vidros');
 var pintura = require('./etapas/pintura');
 var servicosComplementares = require('./etapas/servicosComplementares');
+var piscina = require('./etapas/piscina');
 var bdi = require('./etapas/bdi');
 var projetoArquitetonico = require('./etapas/projetoArquitetonico');
 var projetoEletrico = require('./etapas/projetoEletrico');
@@ -39,19 +40,22 @@ module.exports = (estimateObject) => {
   detailedBudget.push(vidros(valorTotal));
   detailedBudget.push(pintura(valorTotal));
   detailedBudget.push(servicosComplementares(valorTotal));
-  if (estimateObject.bdi) {
-    detailedBudget.push(bdi(estimateObject.standard, valorTotal));
+  if (estimateObject.pool === 'true') {
+    detailedBudget.push(piscina(estimateObject.poolLength, estimateObject.poolWidth));
   };
-  if (estimateObject.architecturalProject) {
+  if (estimateObject.bdi === 'true') {
+    detailedBudget.push(bdi(estimateObject.standard, estimateObject.bdiValue, valorTotal));
+  };
+  if (estimateObject.architecturalProject === 'true') {
     detailedBudget.push(projetoArquitetonico(estimateObject.standard, estimateObject.architecturalProjectValue, estimateObject.totalArea))
   };
-  if (estimateObject.electricalProject) {
+  if (estimateObject.electricalProject === 'true') {
     detailedBudget.push(projetoEletrico(estimateObject.standard, estimateObject.electricalProjectValue, estimateObject.totalArea))
   };
-  if (estimateObject.hydraulicProject) {
+  if (estimateObject.hydraulicProject === 'true') {
     detailedBudget.push(projetoHidraulico(estimateObject.standard, estimateObject.hydraulicProjectValue, estimateObject.totalArea))
   };
-  if (estimateObject.structuralProject) {
+  if (estimateObject.structuralProject === 'true') {
     detailedBudget.push(projetoEstrutural(estimateObject.standard, estimateObject.structuralProjectValue, estimateObject.totalArea))
   };
 

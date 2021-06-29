@@ -1,12 +1,12 @@
 const PORCENTAGEM_POR_PADRAO = {
-  baixo: 0.2,
-  medio: 0.3,
-  alto: 0.4,
+  baixo: 0.1,
+  medio: 0.2,
+  alto: 0.27,
 };
-module.exports = (standard, valorTotal) => {
+module.exports = (standard, bdiValue, valorTotal) => {
   return {
     name: "BDI",
-    totalBudget: valorTotal * PORCENTAGEM_POR_PADRAO[standard],
+    totalBudget: bdiValue ? valorTotal * bdi / 100 : valorTotal * PORCENTAGEM_POR_PADRAO[standard],
     steps: []
   }
 }
